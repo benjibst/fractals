@@ -1,0 +1,6 @@
+#ifndef FRACTALS_RENDERER_H
+#define FRACTALS_RENDERER_H
+
+
+
+#endif //FRACTALS_RENDERER_H

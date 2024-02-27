@@ -3,8 +3,5 @@ project(fractals C)
 
 set(CMAKE_C_STANDARD 11)
 
-include_directories(.)
-
-add_executable(fractals
-        sierpinski.c
-        sierpinski.h)
+add_subdirectory(lib)
+add_subdirectory(src)
