@@ -3,7 +3,9 @@ cmake_minimum_required(VERSION 3.27)
 set(CMAKE_C_STANDARD 11)
 
 # local glfw repo
-add_executable(renderer main.c renderer.c ${CMAKE_SOURCE_DIR}/glad/src/glad.c)
+add_executable(renderer main.c renderer.c ${CMAKE_SOURCE_DIR}/glad/src/glad.c
+        sierpinskirenderer.c
+        ../utils/utils.c)
 
 target_include_directories(renderer PUBLIC ${CMAKE_SOURCE_DIR}/lib)
 target_link_libraries(renderer PUBLIC sierpinski)
@@ -17,6 +19,8 @@ elseif (UNIX)
 endif ()
 
 target_include_directories(renderer PUBLIC ${CMAKE_SOURCE_DIR}/glad/include)
+
+target_include_directories(renderer PUBLIC ${CMAKE_SOURCE_DIR}/utils)
 
 
 

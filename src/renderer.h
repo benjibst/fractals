@@ -1,6 +1,6 @@
 #ifndef FRACTALS_RENDERER_H
 #define FRACTALS_RENDERER_H
 
-
+void Run();
 
 #endif //FRACTALS_RENDERER_H

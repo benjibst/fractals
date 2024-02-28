@@ -3,6 +3,6 @@
 
 #include "geometry.h"
 
-void sierpinski(int iterations, Triangle base, Vec2f* fractal);
+void sierpinski(unsigned int iterations, Triangle2f base, Vec2f * out_p);
 
 #endif //FRACTALS_SIERPINSKI_H
