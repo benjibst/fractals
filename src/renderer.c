@@ -41,7 +41,7 @@ void Run() {
         return;
     }
     glViewport(0, 0, 500, 500);
-    if(init_sierpinski_renderer_lines(1)){
+    if(init_sierpinski_renderer_lines(5)){
         glfwTerminate();
         return;
     }

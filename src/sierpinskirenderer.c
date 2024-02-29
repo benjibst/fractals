@@ -7,6 +7,7 @@
 #include "shader.h"
 #include "GLFW/glfw3.h"
 #include <math.h>
+#include "cglm/call.h"
 
 static GLuint sierpinski_shader_prog = 0;
 static GLuint sierpinski_vao = 0;
@@ -102,10 +103,19 @@ void sierpinski_draw_dots(double time)
 }
 void sierpinski_draw_lines(double time)
 {
+    mat4 rot = {1,0,0,0,
+                0,1,0,0,
+                0,0,1,0,
+                0,0,0,1};
     GLint loc = glGetUniformLocation(sierpinski_shader_prog, "vertex_color");
+    GLint loc_rot = glGetUniformLocation(sierpinski_shader_prog, "transform");
     float red = (float) sin(time) / 2.0f + 0.5f;
     float green = (float) sin(time + 2*M_PI/3) / 2.0f + 0.5f;
     float blue = (float) sin(time + 4*M_PI/3) / 2.0f + 0.5f;
+    glmc_rotate(rot, (float) time, (vec3){0,1,0});
+    glmc_translate(rot, (vec3){1,0,0});
+    glmc_scale(rot, (vec3){red/2+0.5f,1- red/2,1.0f});
+    glUniformMatrix4fv(loc_rot, 1, GL_FALSE, (float*)rot);
     glUniform4f(loc, red,green, blue, 1.0f);
     glUseProgram(sierpinski_shader_prog);
     glBindVertexArray(sierpinski_vao);

@@ -14,11 +14,19 @@ add_executable(renderer ${CMAKE_SOURCE_DIR}/glad/src/glad.c
 
 target_include_directories(renderer PUBLIC ${CMAKE_SOURCE_DIR}/glad/include)
 target_include_directories(renderer PUBLIC ${CMAKE_SOURCE_DIR}/glfw/include)
+target_include_directories(renderer PUBLIC ${CMAKE_SOURCE_DIR}/cglm/include)
+
 if (WIN32)
-    target_link_libraries(renderer PUBLIC ${CMAKE_SOURCE_DIR}/glfw/bin/glfw3.lib)
+    target_link_libraries(renderer PUBLIC
+            ${CMAKE_SOURCE_DIR}/glfw/bin/glfw3.lib
+            ${CMAKE_SOURCE_DIR}/cglm/bin/libcglm.lib
+    )
     target_link_libraries(renderer PUBLIC opengl32 user32 gdi32 shell32)
 elseif (UNIX)
-    target_link_libraries(renderer PUBLIC ${CMAKE_SOURCE_DIR}/glfw/bin/libglfw3.a m)
+    target_link_libraries(renderer PUBLIC
+            ${CMAKE_SOURCE_DIR}/glfw/bin/libglfw3.a
+            ${CMAKE_SOURCE_DIR}/cglm/bin/libcglm.a
+            m)
 endif ()
 
 
