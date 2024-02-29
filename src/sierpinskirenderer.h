@@ -5,8 +5,10 @@
 #define SIERPINSKI_VERTEX_SHADER_PATH PROJECT_BASE"/shaders/sierpinski.vert"
 #define SIERPINSKI_FRAGMENT_SHADER_PATH PROJECT_BASE"/shaders/sierpinski.frag"
 
-void sierpinski_draw();
-int init_sierpinski_renderer(unsigned int iterations);
+int init_sierpinski_renderer_dots(unsigned int iterations);
+int init_sierpinski_renderer_lines(unsigned int iterations);
+void sierpinski_draw_dots(double time);
+void sierpinski_draw_lines(double time);
 
 
 #endif //FRACTALS_SIERPINSKIRENDERER_H

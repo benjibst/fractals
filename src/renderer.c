@@ -1,6 +1,6 @@
 #include "renderer.h"
 #include <stdio.h>
-#include <utils.h>
+#include "utils.h"
 #include "glad/glad.h"
 #include "GLFW/glfw3.h"
 #include "sierpinskirenderer.h"
@@ -37,17 +37,21 @@ void Run() {
     if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress))
     {
         PRINTERR("Failed to initialize GLAD\n");
+        glfwTerminate();
         return;
     }
     glViewport(0, 0, 500, 500);
-    init_sierpinski_renderer(10000);
+    if(init_sierpinski_renderer_lines(1)){
+        glfwTerminate();
+        return;
+    }
     while(!glfwWindowShouldClose(window))
     {
         glfwPollEvents();
         processInput(window);
         glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
         glClear(GL_COLOR_BUFFER_BIT);
-        sierpinski_draw();
+        sierpinski_draw_lines(glfwGetTime());
         glfwSwapBuffers(window);
     }
     glfwTerminate();

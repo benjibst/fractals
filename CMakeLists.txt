@@ -5,5 +5,4 @@ set(CMAKE_C_STANDARD 11)
 
 add_definitions(-DPROJECT_BASE="${PROJECT_SOURCE_DIR}")
 
-add_subdirectory(lib)
 add_subdirectory(src)

@@ -4,56 +4,112 @@
 #include <stdio.h>
 #include "sierpinski.h"
 #include "utils.h"
+#include "shader.h"
+#include "GLFW/glfw3.h"
 #include <math.h>
 
 static GLuint sierpinski_shader_prog = 0;
 static GLuint sierpinski_vao = 0;
-static unsigned int sierpinski_iterations = 0;
+static unsigned int sierpinski_elements = 0;
 
-int buffer_sierpinski_data(unsigned int iterations){
-    sierpinski_iterations= iterations;
-    float height = (float)sqrt(3)/4;
+int buffer_sierpinski_data_dots(unsigned int iterations)
+{
+    sierpinski_elements = iterations;
+    float height = (float) sqrt(3) / 4;
     Triangle2f base = {
-        .p = {
-            {-0.5f, -height},
-            {0.5f, -height},
-            {0.0f, +height}
-        }
+            .p = {
+                    {-0.5f, -height},
+                    {0.5f,  -height},
+                    {0.0f,  +height}
+            }
     };
     srand(time(NULL));
-    Vec2f *fractal = malloc(iterations*sizeof(Vec2f));
-    if (!fractal){
+    Vec2f *fractal = malloc(iterations * sizeof(Vec2f));
+    if (!fractal) {
         PRINTERR("Failed to allocate memory for fractal\n");
         return -1;
     }
-    sierpinski(iterations, base, fractal);
+    sierpinski_dots(iterations, base, fractal);
     glGenVertexArrays(1, &sierpinski_vao);
     glBindVertexArray(sierpinski_vao);
     GLuint vbo;
     glGenBuffers(1, &vbo);
     glBindBuffer(GL_ARRAY_BUFFER, vbo);
     glBufferData(GL_ARRAY_BUFFER, iterations * sizeof(Vec2f), fractal, GL_STATIC_DRAW);
-    glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 2 * sizeof(float), (void*)0);
+    glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, sizeof (Vec2f), (void *) 0);
     glEnableVertexAttribArray(0);
     free(fractal);
     return 0;
 }
 
-int init_sierpinski_renderer(unsigned int iterations)
-{
-    if (buffer_sierpinski_data(iterations)){
+int buffer_sierpinski_data_lines(unsigned iterations){
+    float height = (float) sqrt(3) / 4;
+    Triangle2f base = {
+            .p = {
+                    {-0.5f, -height},
+                    {0.5f,  -height},
+                    {0.0f,  +height}
+            }
+    };
+    srand(time(NULL));
+    sierpinski_elements = (ipow(3,iterations)-1)/2;
+    Triangle2f *fractal = malloc(sierpinski_elements * sizeof(Triangle2f));
+    if (!fractal) {
+        PRINTERR("Failed to allocate memory for fractal\n");
         return -1;
     }
-    GLuint shader = get_vert_frag_shader_program(SIERPINSKI_VERTEX_SHADER_PATH, SIERPINSKI_FRAGMENT_SHADER_PATH);
-    if(!shader){
-        return -1;
-    }
-    glUseProgram(shader);
+    sierpinski_lines(iterations,0, base, fractal,0);
+    glGenVertexArrays(1, &sierpinski_vao);
+    glBindVertexArray(sierpinski_vao);
+    GLuint vbo;
+    glGenBuffers(1, &vbo);
+    glBindBuffer(GL_ARRAY_BUFFER, vbo);
+    glBufferData(GL_ARRAY_BUFFER, sierpinski_elements * sizeof(Triangle2f), fractal, GL_STATIC_DRAW);
+    glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, sizeof (Vec2f), (void *) 0);
+    glEnableVertexAttribArray(0);
+    free(fractal);
+    return 0;
 }
 
-void sierpinski_draw(){
+int init_sierpinski_renderer_dots(unsigned int iterations)
+{
+    if (buffer_sierpinski_data_dots(iterations)) {
+        return -1;
+    }
+    return init_shader_program_vf(&sierpinski_shader_prog, SIERPINSKI_VERTEX_SHADER_PATH, SIERPINSKI_FRAGMENT_SHADER_PATH);
+
+}
+
+int init_sierpinski_renderer_lines(unsigned int iterations)
+{
+    if (buffer_sierpinski_data_lines(iterations)) {
+        return -1;
+    }
+    return init_shader_program_vf(&sierpinski_shader_prog, SIERPINSKI_VERTEX_SHADER_PATH, SIERPINSKI_FRAGMENT_SHADER_PATH);
+
+}
+
+void sierpinski_draw_dots(double time)
+{
+    GLint loc = glGetUniformLocation(sierpinski_shader_prog, "vertex_color");
+    float red = (float) sin(time) / 2.0f + 0.5f;
+    float green = (float) sin(time + 2*M_PI/3) / 2.0f + 0.5f;
+    float blue = (float) sin(time + 4*M_PI/3) / 2.0f + 0.5f;
+    glUniform4f(loc, red,green, blue, 1.0f);
     glUseProgram(sierpinski_shader_prog);
     glBindVertexArray(sierpinski_vao);
-    glDrawArrays(GL_POINTS, 0, sierpinski_iterations);
+    glDrawArrays(GL_POINTS, 0, sierpinski_elements);
+}
+void sierpinski_draw_lines(double time)
+{
+    GLint loc = glGetUniformLocation(sierpinski_shader_prog, "vertex_color");
+    float red = (float) sin(time) / 2.0f + 0.5f;
+    float green = (float) sin(time + 2*M_PI/3) / 2.0f + 0.5f;
+    float blue = (float) sin(time + 4*M_PI/3) / 2.0f + 0.5f;
+    glUniform4f(loc, red,green, blue, 1.0f);
+    glUseProgram(sierpinski_shader_prog);
+    glBindVertexArray(sierpinski_vao);
+    glPolygonMode(GL_FRONT_AND_BACK,GL_LINE);
+    glDrawArrays(GL_TRIANGLES, 0, sierpinski_elements);
 }
 
