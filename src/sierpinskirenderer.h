@@ -8,7 +8,7 @@
 int init_sierpinski_renderer_dots(unsigned int iterations);
 int init_sierpinski_renderer_lines(unsigned int iterations);
 void sierpinski_draw_dots(double time);
-void sierpinski_draw_lines(double time);
+void sierpinski_draw_lines(double time, float scale, float x_offset, float y_offset);
 
 
 #endif //FRACTALS_SIERPINSKIRENDERER_H
