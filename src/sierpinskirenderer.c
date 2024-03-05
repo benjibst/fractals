@@ -5,7 +5,6 @@
 #include "sierpinski.h"
 #include "utils.h"
 #include "shader.h"
-#include "GLFW/glfw3.h"
 #include <math.h>
 #include "cglm/call.h"
 

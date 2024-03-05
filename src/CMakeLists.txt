@@ -18,8 +18,8 @@ target_include_directories(renderer PUBLIC ${CMAKE_SOURCE_DIR}/cglm/include)
 
 if (WIN32)
     target_link_libraries(renderer PUBLIC
-            ${CMAKE_SOURCE_DIR}/glfw/bin/glfw3.lib
             ${CMAKE_SOURCE_DIR}/cglm/bin/libcglm.lib
+            ${CMAKE_SOURCE_DIR}/glfw/bin/glfw3.lib
     )
     target_link_libraries(renderer PUBLIC opengl32 user32 gdi32 shell32)
 elseif (UNIX)

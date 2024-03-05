@@ -1,0 +1,19 @@
+# ninja log v5
+12	175	7308517830133242	src/CMakeFiles/renderer.dir/renderer.c.obj	855091ec9d19e2c2
+1	130	7308517829653231	lib/CMakeFiles/sierpinski.dir/sierpinski.c.obj	7821510be8d59195
+1	109	7310230060544206	build.ninja	e4f1b72e8573677f
+131	211	7308517830363205	lib/sierpinski.lib	f87bfb14c5158c3d
+0	15	0	clean	7e8bf7b79789940c
+7	108	7308517829363204	src/CMakeFiles/renderer.dir/main.c.obj	56f5f669f20f8cc4
+24	780	7308517836191898	src/CMakeFiles/renderer.dir/__/glad/src/glad.c.obj	abb689d77992594b
+780	930	7308517837556279	src/renderer.exe	81b98c60ee04f968
+18	245	7308517830779132	src/CMakeFiles/renderer.dir/sierpinskirenderer.c.obj	c625b52be788da4c
+34	260	7308517830959149	src/CMakeFiles/renderer.dir/__/utils/utils.c.obj	517e528585d1ec3e
+12	91	7310232615195414	src/CMakeFiles/renderer.dir/main.c.obj	da3eb280d654b942
+44	127	7310232615595396	src/CMakeFiles/renderer.dir/geometry.c.obj	a76b6a5c8dec117a
+18	130	7310232615635383	src/CMakeFiles/renderer.dir/sierpinski.c.obj	ef649beefb46fd85
+1	160	7310232615915384	src/CMakeFiles/renderer.dir/renderer.c.obj	c4581a1544064220
+38	166	7310232615995380	src/CMakeFiles/renderer.dir/utils.c.obj	88ffb1f01f8a4328
+30	172	7310232616055368	src/CMakeFiles/renderer.dir/shader.c.obj	9446ed70da9633ad
+24	232	7310232616645387	src/CMakeFiles/renderer.dir/sierpinskirenderer.c.obj	55127438e3b05377
+7	601	7310232620325400	src/CMakeFiles/renderer.dir/__/glad/src/glad.c.obj	291e03d9ac8fff5
