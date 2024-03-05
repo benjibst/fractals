@@ -3,7 +3,8 @@ cmake_minimum_required(VERSION 3.27)
 set(CMAKE_C_STANDARD 11)
 
 # local glfw repo
-add_executable(renderer ${CMAKE_SOURCE_DIR}/glad/src/glad.c
+add_executable(renderer
+        ${GLADC}
         main.c
         renderer.c
         shader.c
@@ -12,19 +13,17 @@ add_executable(renderer ${CMAKE_SOURCE_DIR}/glad/src/glad.c
         utils.c
         geometry.c)
 
-target_include_directories(renderer PUBLIC ${CMAKE_SOURCE_DIR}/glad/include)
-target_include_directories(renderer PUBLIC ${CMAKE_SOURCE_DIR}/glfw/include)
 target_include_directories(renderer PUBLIC ${CMAKE_SOURCE_DIR}/cglm/include)
 
-if (WIN32)
+if (MSVC)
     target_link_libraries(renderer PUBLIC
             ${CMAKE_SOURCE_DIR}/cglm/bin/libcglm.lib
-            ${CMAKE_SOURCE_DIR}/glfw/bin/glfw3.lib
+            glfw opengl32 user32 gdi32 shell32
     )
-    target_link_libraries(renderer PUBLIC opengl32 user32 gdi32 shell32)
+    SET( CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} /ENTRY:mainCRTStartup" )
 elseif (UNIX)
     target_link_libraries(renderer PUBLIC
-            ${CMAKE_SOURCE_DIR}/glfw/bin/libglfw3.a
+            glfw
             ${CMAKE_SOURCE_DIR}/cglm/bin/libcglm.a
             m)
 endif ()

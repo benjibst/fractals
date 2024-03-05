@@ -1,7 +1,7 @@
 #include "renderer.h"
 #include <stdio.h>
 #include "utils.h"
-#include "glad/glad.h"
+#include "glad/gl.h"
 #include "GLFW/glfw3.h"
 #include "sierpinskirenderer.h"
 
@@ -80,7 +80,7 @@ void Run()
     glfwSetWindowSizeCallback(window, window_sz_callback);
     glfwSetScrollCallback(window, scroll_callback);
     glfwMakeContextCurrent(window);
-    if (!gladLoadGLLoader((GLADloadproc) glfwGetProcAddress)) {
+    if (!gladLoadGL(glfwGetProcAddress)) {
         PRINTERR("Failed to initialize GLAD\n");
         glfwTerminate();
         return;
