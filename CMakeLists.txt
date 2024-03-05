@@ -7,7 +7,10 @@ find_package(OpenGL REQUIRED)
 
 add_definitions(-DPROJECT_BASE="${PROJECT_SOURCE_DIR}")
 
-set(GLADC "${PROJECT_SOURCE_DIR}/glad/src/glad.c")
+set(GLADC "${PROJECT_SOURCE_DIR}/glad/src/gl.c")
+
+include_directories(${PROJECT_SOURCE_DIR}/glad/include)
 
 add_subdirectory(glfw)
+add_subdirectory(cglm)
 add_subdirectory(src)

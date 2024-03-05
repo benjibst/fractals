@@ -13,19 +13,10 @@ add_executable(renderer
         utils.c
         geometry.c)
 
-target_include_directories(renderer PUBLIC ${CMAKE_SOURCE_DIR}/cglm/include)
-
 if (MSVC)
-    target_link_libraries(renderer PUBLIC
-            ${CMAKE_SOURCE_DIR}/cglm/bin/libcglm.lib
-            glfw opengl32 user32 gdi32 shell32
-    )
-    SET( CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} /ENTRY:mainCRTStartup" )
+    target_link_libraries(renderer PUBLIC cglm glfw opengl32 user32 gdi32 shell32)
 elseif (UNIX)
-    target_link_libraries(renderer PUBLIC
-            glfw
-            ${CMAKE_SOURCE_DIR}/cglm/bin/libcglm.a
-            m)
+    target_link_libraries(renderer PUBLIC glfw cglm m)
 endif ()
 
 
